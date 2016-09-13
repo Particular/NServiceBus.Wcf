@@ -60,9 +60,10 @@
   <ItemGroup>
     <Compile Include="IProvideMessageSession.cs" />
     <Compile Include="IWcfService.cs" />
-    <Compile Include="MessageSessionInstanceProvider.cs" />
-    <Compile Include="MessageSessionInstanceProviderContractBehavior.cs" />
+    <Compile Include="MessageSessionInspector.cs" />
+    <Compile Include="MessageSessionInspectorContractBehavior.cs" />
     <Compile Include="ServiceTypeFilterExtensions.cs" />
+    <Compile Include="WcfEndpointConfigurationExtensions.cs" />
     <Compile Include="WcfManager.cs" />
     <Compile Include="WcfService.cs" />
     <Compile Include="WcfServiceHost.cs" />

@@ -11,8 +11,9 @@
     /// </summary>
     class WcfManager
     {
-        public WcfManager(IEnumerable<Type> serviceTypes)
+        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, Tuple<Binding, string>> bindingProvider)
         {
+            this.bindingProvider = bindingProvider;
             this.serviceTypes = serviceTypes;
         }
 
@@ -26,16 +27,8 @@
             {
                 var host = new WcfServiceHost(serviceType, session);
 
-                Binding binding = new BasicHttpBinding();
-
-                // Better way to do this?
-                //if (components.HasComponent<Binding>())
-                //{
-                //    binding = session.Builder.Build<Binding>();
-                //}
-
-                host.AddDefaultEndpoint(GetContractType(serviceType), binding, string.Empty);
-
+                var bindingAndAddress = bindingProvider(serviceType);
+                host.AddDefaultEndpoint(GetContractType(serviceType), bindingAndAddress.Item1, bindingAndAddress.Item2);
                 hosts.Add(host);
 
                 await Task.Factory.FromAsync((cbl, state) => host.BeginOpen(cbl, state), t => host.EndOpen(t), null).ConfigureAwait(false);
@@ -64,5 +57,6 @@
 
         readonly List<ServiceHost> hosts = new List<ServiceHost>();
         IEnumerable<Type> serviceTypes;
+        Func<Type, Tuple<Binding, string>> bindingProvider;
     }
 }

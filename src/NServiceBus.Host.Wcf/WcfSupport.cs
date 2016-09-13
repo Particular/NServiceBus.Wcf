@@ -1,5 +1,8 @@
 ﻿namespace NServiceBus.Features
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
     using System.Threading.Tasks;
     using Hosting.Wcf;
 
@@ -8,6 +11,7 @@
         public WcfSupport()
         {
             EnableByDefault();
+            Defaults(s => s.SetDefault(bindingProviderKey, new Func<Type, Tuple<Binding, string>>(t => Tuple.Create< Binding, string>(new BasicHttpBinding(), string.Empty))));
         }
 
         protected override void Setup(FeatureConfigurationContext context)
@@ -15,14 +19,15 @@
             var conventions = context.Settings.Get<Conventions>();
             var availableTypes = context.Settings.GetAvailableTypes();
             var serviceTypes = availableTypes.SelectServiceTypes(conventions);
+            var provider = context.Settings.Get<Func<Type, Tuple<Binding, string>>>(bindingProviderKey);
 
-            context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes)));
+            context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes, provider)));
         }
+
+        public const string bindingProviderKey = "BindingProvider";
 
         class StartupTask : FeatureStartupTask
         {
-            WcfManager wcfManager;
-
             public StartupTask(WcfManager wcfManager)
             {
                 this.wcfManager = wcfManager;
@@ -37,6 +42,8 @@
             {
                 return wcfManager.Shutdown();
             }
+
+            WcfManager wcfManager;
         }
     }
 }

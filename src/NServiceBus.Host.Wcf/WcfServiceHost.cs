@@ -42,7 +42,7 @@ namespace NServiceBus.Hosting.Wcf
 
             foreach (var cd in ImplementedContracts.Values)
             {
-                cd.Behaviors.Add(new MessageSessionInstanceProviderContractBehavior(session));
+                cd.Behaviors.Add(new MessageSessionInspectorContractBehavior(session));
             }
 
             if (!endpointAlreadyConfigured)
