@@ -2,33 +2,37 @@ namespace NServiceBus.AcceptanceTests
 {
     using System;
     using System.ServiceModel;
-    using System.ServiceModel.Channels;
     using System.Threading.Tasks;
     using AcceptanceTesting;
     using EndpointTemplates;
     using NUnit.Framework;
 
-    public class When_using_enum : NServiceBusAcceptanceTest
+    public class When_using_message_response : NServiceBusAcceptanceTest
     {
         [Test]
-        public async Task Message_should_be_received()
+        public async Task Response_should_be_received()
         {
+            var messageId = Guid.NewGuid();
+
             var context = await Scenario.Define<Context>()
-                .WithEndpoint<Endpoint>(b => b.When((session, c) =>
+                .WithEndpoint<Endpoint>(b => b.When(async (session, c) =>
                 {
                     var pipeFactory = new ChannelFactory<IWcfService<MyMessage, MyResponse>>(new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/MyService"));
                     var pipeProxy = pipeFactory.CreateChannel();
-                    return pipeProxy.Process(new MyMessage());
+                    var response = await pipeProxy.Process(new MyMessage { Id = messageId });
+                    c.Id = response.Id;
                 }))
-                .Done(c => c.HandlerCalled)
+                .Done(c => c.HandlerCalled && c.Id.HasValue)
                 .Run();
 
             Assert.IsTrue(context.HandlerCalled);
+            Assert.AreEqual(messageId, context.Id);
         }
 
         class Context : ScenarioContext
         {
             public bool HandlerCalled { get; set; }
+            public Guid? Id { get; set; }
         }
 
         class Endpoint : EndpointConfigurationBuilder
@@ -38,7 +42,7 @@ namespace NServiceBus.AcceptanceTests
                 EndpointSetup<DefaultServer>(c =>
                 {
                     c.MakeInstanceUniquelyAddressable("1");
-                    c.BindingProvider(t => Tuple.Create<Binding, string>(new NetNamedPipeBinding(), "net.pipe://localhost/MyService"));
+                    c.BindingProvider(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")));
                 });
             }
 
@@ -51,19 +55,19 @@ namespace NServiceBus.AcceptanceTests
                 public Task Handle(MyMessage message, IMessageHandlerContext context)
                 {
                     Context.HandlerCalled = true;
-                    return context.Reply(new MyResponse());
+                    return context.Reply(new MyResponse { Id = message.Id });
                 }
             }
         }
 
-        [Serializable]
         public class MyMessage : ICommand
         {
+            public Guid Id { get; set; }
         }
 
-        [Serializable]
         public class MyResponse : IMessage
         {
+            public Guid Id { get; set; }
         }
     }
 }

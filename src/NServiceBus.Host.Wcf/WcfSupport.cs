@@ -2,7 +2,6 @@
 {
     using System;
     using System.ServiceModel;
-    using System.ServiceModel.Channels;
     using System.Threading.Tasks;
     using Hosting.Wcf;
 
@@ -11,7 +10,7 @@
         public WcfSupport()
         {
             EnableByDefault();
-            Defaults(s => s.SetDefault(bindingProviderKey, new Func<Type, Tuple<Binding, string>>(t => Tuple.Create< Binding, string>(new BasicHttpBinding(), string.Empty))));
+            Defaults(s => s.SetDefault(bindingProviderKey, new Func<Type, BindingConfiguration>(t => new BindingConfiguration(new BasicHttpBinding()))));
         }
 
         protected override void Setup(FeatureConfigurationContext context)
@@ -19,7 +18,7 @@
             var conventions = context.Settings.Get<Conventions>();
             var availableTypes = context.Settings.GetAvailableTypes();
             var serviceTypes = availableTypes.SelectServiceTypes(conventions);
-            var provider = context.Settings.Get<Func<Type, Tuple<Binding, string>>>(bindingProviderKey);
+            var provider = context.Settings.Get<Func<Type, BindingConfiguration>>(bindingProviderKey);
 
             context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes, provider)));
         }

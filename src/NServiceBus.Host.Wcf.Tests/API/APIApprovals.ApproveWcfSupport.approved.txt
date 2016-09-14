@@ -4,14 +4,22 @@
 [assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.5.2", FrameworkDisplayName=".NET Framework 4.5.2")]
 namespace NServiceBus
 {
+    public class BindingConfiguration
+    {
+        public BindingConfiguration(System.ServiceModel.Channels.Binding binding) { }
+        public BindingConfiguration(System.ServiceModel.Channels.Binding binding, System.Uri address) { }
+        public System.Uri Address { get; }
+        public System.ServiceModel.Channels.Binding Binding { get; }
+    }
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://nservicebus.com")]
     public interface IWcfService<in TRequest, TResponse>
     {
+        [System.ServiceModel.OperationContractAttribute()]
         System.Threading.Tasks.Task<TResponse> Process(TRequest request);
     }
     public class static WcfEndpointConfigurationExtensions
     {
-        public static void BindingProvider(this NServiceBus.EndpointConfiguration configuration, System.Func<System.Type, System.ServiceModel.Channels.Binding> provider) { }
+        public static void BindingProvider(this NServiceBus.EndpointConfiguration configuration, System.Func<System.Type, NServiceBus.BindingConfiguration> provider) { }
     }
     [System.ServiceModel.ServiceBehaviorAttribute(ConcurrencyMode=System.ServiceModel.ConcurrencyMode.Multiple, InstanceContextMode=System.ServiceModel.InstanceContextMode.PerCall)]
     public abstract class WcfService<TRequest, TResponse> : NServiceBus.IProvideMessageSession, NServiceBus.IWcfService<TRequest, TResponse>

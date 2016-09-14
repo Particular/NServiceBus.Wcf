@@ -58,6 +58,7 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingConfiguration.cs" />
     <Compile Include="IProvideMessageSession.cs" />
     <Compile Include="IWcfService.cs" />
     <Compile Include="MessageSessionInspector.cs" />

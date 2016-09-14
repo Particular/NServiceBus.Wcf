@@ -19,7 +19,7 @@ namespace NServiceBus.Hosting.Wcf
         /// <summary>
         /// Adds the given endpoint unless its already configured in app.config
         /// </summary>
-        public void AddDefaultEndpoint(Type contractType, Binding binding, string address)
+        public void AddDefaultEndpoint(Type contractType, Binding binding, Uri address)
         {
             var serviceModel = ServiceModelSectionGroup.GetSectionGroup(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None));
 
@@ -34,7 +34,7 @@ namespace NServiceBus.Hosting.Wcf
                 {
                     foreach (ServiceEndpointElement endpoint in se.Endpoints)
                     {
-                        if (endpoint.Contract == contractType.FullName && endpoint.Address.OriginalString == address)
+                        if (endpoint.Contract == contractType.FullName && endpoint.Address == address)
                             endpointAlreadyConfigured = true;
                     }
                 }

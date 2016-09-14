@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ServiceModel;
-    using System.ServiceModel.Channels;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -11,7 +10,7 @@
     /// </summary>
     class WcfManager
     {
-        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, Tuple<Binding, string>> bindingProvider)
+        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, BindingConfiguration> bindingProvider)
         {
             this.bindingProvider = bindingProvider;
             this.serviceTypes = serviceTypes;
@@ -28,7 +27,7 @@
                 var host = new WcfServiceHost(serviceType, session);
 
                 var bindingAndAddress = bindingProvider(serviceType);
-                host.AddDefaultEndpoint(GetContractType(serviceType), bindingAndAddress.Item1, bindingAndAddress.Item2);
+                host.AddDefaultEndpoint(GetContractType(serviceType), bindingAndAddress.Binding, bindingAndAddress.Address);
                 hosts.Add(host);
 
                 await Task.Factory.FromAsync((cbl, state) => host.BeginOpen(cbl, state), t => host.EndOpen(t), null).ConfigureAwait(false);
@@ -57,6 +56,6 @@
 
         readonly List<ServiceHost> hosts = new List<ServiceHost>();
         IEnumerable<Type> serviceTypes;
-        Func<Type, Tuple<Binding, string>> bindingProvider;
+        Func<Type, BindingConfiguration> bindingProvider;
     }
 }
