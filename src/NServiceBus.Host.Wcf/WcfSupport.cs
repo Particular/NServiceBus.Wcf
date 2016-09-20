@@ -11,6 +11,7 @@
         {
             EnableByDefault();
             Defaults(s => s.SetDefault(bindingProviderKey, new Func<Type, BindingConfiguration>(t => new BindingConfiguration(new BasicHttpBinding()))));
+            Defaults(s => s.SetDefault(cancelAfterProviderKey, new Func<Type, TimeSpan>(t => TimeSpan.FromSeconds(60))));
         }
 
         protected override void Setup(FeatureConfigurationContext context)
@@ -18,12 +19,15 @@
             var conventions = context.Settings.Get<Conventions>();
             var availableTypes = context.Settings.GetAvailableTypes();
             var serviceTypes = availableTypes.SelectServiceTypes(conventions);
-            var provider = context.Settings.Get<Func<Type, BindingConfiguration>>(bindingProviderKey);
 
-            context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes, provider)));
+            var bindingProvider = context.Settings.Get<Func<Type, BindingConfiguration>>(bindingProviderKey);
+            var cancelAfterProvider = context.Settings.Get<Func<Type, TimeSpan>>(cancelAfterProviderKey);
+
+            context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes, bindingProvider, cancelAfterProvider)));
         }
 
         public const string bindingProviderKey = "BindingProvider";
+        public const string cancelAfterProviderKey = "CancelAfterProvider";
 
         class StartupTask : FeatureStartupTask
         {

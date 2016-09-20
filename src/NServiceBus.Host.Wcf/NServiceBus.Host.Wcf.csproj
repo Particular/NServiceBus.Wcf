@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingConfiguration.cs" />
+    <Compile Include="CancelAfterContractBehavior.cs" />
+    <Compile Include="CancelAfterInspector.cs" />
+    <Compile Include="IProvideCancellationSupport.cs" />
     <Compile Include="IProvideMessageSession.cs" />
     <Compile Include="IWcfService.cs" />
     <Compile Include="MessageSessionInspector.cs" />

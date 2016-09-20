@@ -1,14 +1,15 @@
 namespace NServiceBus.Hosting.Wcf
 {
+    using System;
     using System.ServiceModel.Channels;
     using System.ServiceModel.Description;
     using System.ServiceModel.Dispatcher;
 
-    class MessageSessionInspectorContractBehavior : IContractBehavior
+    class CancelAfterContractBehavior : IContractBehavior
     {
-        public MessageSessionInspectorContractBehavior(IMessageSession session)
+        public CancelAfterContractBehavior(TimeSpan session)
         {
-            messageSession = session;
+            cancelAfter = session;
         }
 
         public void Validate(ContractDescription contractDescription, ServiceEndpoint endpoint)
@@ -17,7 +18,7 @@ namespace NServiceBus.Hosting.Wcf
 
         public void ApplyDispatchBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, DispatchRuntime dispatchRuntime)
         {
-            dispatchRuntime.MessageInspectors.Add(new MessageSessionInspector(messageSession));
+            dispatchRuntime.MessageInspectors.Add(new CancelAfterInspector(cancelAfter));
         }
 
         public void ApplyClientBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, ClientRuntime clientRuntime)
@@ -28,6 +29,6 @@ namespace NServiceBus.Hosting.Wcf
         {
         }
 
-        IMessageSession messageSession;
+        TimeSpan cancelAfter;
     }
 }

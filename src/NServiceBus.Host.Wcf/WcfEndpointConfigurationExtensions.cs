@@ -20,5 +20,16 @@ namespace NServiceBus
         {
             configuration.GetSettings().Set(WcfSupport.bindingProviderKey, provider);
         }
+
+        /// <summary>
+        /// Specifies a cancellation timeout provider which allows to return a specific cancellation timespan for a specific service type.
+        /// </summary>
+        /// <remarks>The default binding provider returns TimeSpan.FromSeconds(60) for each service type.</remarks>
+        /// <param name="configuration">The endpoint configuration.</param>
+        /// <param name="provider">The binding provider.</param>
+        public static void CancelAfterProvider(this EndpointConfiguration configuration, Func<Type, TimeSpan> provider)
+        {
+            configuration.GetSettings().Set(WcfSupport.cancelAfterProviderKey, provider);
+        }
     }
 }
