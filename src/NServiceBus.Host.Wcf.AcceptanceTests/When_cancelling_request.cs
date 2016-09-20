@@ -32,11 +32,11 @@ namespace NServiceBus.AcceptanceTests
                         c.Exception = ex;
                     }
                 }))
-                .Done(c => c.HandlerCalled && c.Exception != null)
-                .Run(TimeSpan.FromSeconds(5));
+                .Done(c => c.Exception != null)
+                .Run(TimeSpan.FromSeconds(10));
 
             Assert.That(context.Exception.Message, Does.Contain("The request was cancelled after"));
-            Assert.IsTrue(context.HandlerCalled);
+            Assert.IsFalse(context.HandlerCalled);
             Assert.IsNull(context.Id);
         }
 

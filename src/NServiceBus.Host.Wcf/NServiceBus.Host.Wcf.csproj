@@ -44,11 +44,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NServiceBus.Callbacks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.Callbacks.1.0.0-rc0001\lib\net452\NServiceBus.Callbacks.dll</HintPath>
+      <HintPath>..\packages\NServiceBus.Callbacks.1.0.0-rc0002\lib\net452\NServiceBus.Callbacks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.6.0.0-rc0001\lib\net452\NServiceBus.Core.dll</HintPath>
+      <HintPath>..\packages\NServiceBus.6.0.0-rc0002\lib\net452\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -80,9 +80,7 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\packaging\nuget\nservicebus.callbacks.nuspec">
-      <Link>nservicebus.callbacks.nuspec</Link>
-    </None>
+    <None Include="nservicebus.host.wcf.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
