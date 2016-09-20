@@ -63,9 +63,12 @@
     <Compile Include="CancelAfterInspector.cs" />
     <Compile Include="IProvideCancellationSupport.cs" />
     <Compile Include="IProvideMessageSession.cs" />
+    <Compile Include="IProvideSendOptions.cs" />
     <Compile Include="IWcfService.cs" />
     <Compile Include="MessageSessionInspector.cs" />
     <Compile Include="MessageSessionInspectorContractBehavior.cs" />
+    <Compile Include="SendOptionsProviderContractBehavior.cs" />
+    <Compile Include="SendOptionsProviderInspector.cs" />
     <Compile Include="ServiceTypeFilterExtensions.cs" />
     <Compile Include="WcfEndpointConfigurationExtensions.cs" />
     <Compile Include="WcfManager.cs" />

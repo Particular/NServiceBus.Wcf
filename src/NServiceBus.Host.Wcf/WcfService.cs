@@ -9,11 +9,13 @@ namespace NServiceBus
     /// Generic WCF service for exposing a messaging endpoint.
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public abstract class WcfService<TRequest, TResponse> : IWcfService<TRequest, TResponse>, IProvideMessageSession, IProvideCancellationSupport
+    public abstract class WcfService<TRequest, TResponse> : IWcfService<TRequest, TResponse>, IProvideMessageSession, IProvideCancellationSupport, IProvideSendOptions
     {
         IProvideMessageSession SessionProvider => this;
 
         IProvideCancellationSupport CancelProvider => this;
+
+        IProvideSendOptions SendOptionsProvider => this;
 
         /// <inheritdoc />
         IMessageSession IProvideMessageSession.Session { get; set; }
@@ -21,12 +23,13 @@ namespace NServiceBus
         /// <inheritdoc />
         TimeSpan IProvideCancellationSupport.CancelAfter { get; set; }
 
+        Func<SendOptions> IProvideSendOptions.SendOptionsProvider { get; set; }
+
         async Task<TResponse> IWcfService<TRequest, TResponse>.Process(TRequest request)
         {
             using (var cts = new CancellationTokenSource(CancelProvider.CancelAfter))
             {
-                var sendOptions = new SendOptions();
-                sendOptions.RouteToThisEndpoint();
+                var sendOptions = SendOptionsProvider.SendOptionsProvider();
 
                 try
                 {

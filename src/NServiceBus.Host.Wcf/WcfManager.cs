@@ -10,9 +10,10 @@
     /// </summary>
     class WcfManager
     {
-        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, BindingConfiguration> bindingProvider, Func<Type, TimeSpan> cancelAfterProvider)
+        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, BindingConfiguration> bindingProvider, Func<Type, TimeSpan> cancelAfterProvider, Func<Type, Func<SendOptions>> sendOptionsProvider)
         {
             this.cancelAfterProvider = cancelAfterProvider;
+            this.sendOptionsProvider = sendOptionsProvider;
             this.bindingProvider = bindingProvider;
             this.serviceTypes = serviceTypes;
         }
@@ -26,7 +27,8 @@
             foreach (var serviceType in serviceTypes)
             {
                 var cancelAfter = cancelAfterProvider(serviceType);
-                var host = new WcfServiceHost(serviceType, session, cancelAfter);
+                var optionsProvider = sendOptionsProvider(serviceType);
+                var host = new WcfServiceHost(serviceType, session, cancelAfter, optionsProvider);
 
                 var bindingAndAddress = bindingProvider(serviceType);
                 host.AddDefaultEndpoint(GetContractType(serviceType), bindingAndAddress.Binding, bindingAndAddress.Address);
@@ -58,5 +60,6 @@
         IEnumerable<Type> serviceTypes;
         Func<Type, BindingConfiguration> bindingProvider;
         Func<Type, TimeSpan> cancelAfterProvider;
+        readonly Func<Type, Func<SendOptions>> sendOptionsProvider;
     }
 }

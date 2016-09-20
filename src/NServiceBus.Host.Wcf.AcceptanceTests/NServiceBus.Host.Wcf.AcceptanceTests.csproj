@@ -77,6 +77,7 @@
     <Compile Include="ScenarioDescriptors\Serializers.cs" />
     <Compile Include="ScenarioDescriptors\Transports.cs" />
     <Compile Include="When_cancelling_request.cs" />
+    <Compile Include="When_providing_send_options.cs" />
     <Compile Include="When_using_message_response.cs" />
     <Compile Include="When_using_enum_response.cs" />
   </ItemGroup>

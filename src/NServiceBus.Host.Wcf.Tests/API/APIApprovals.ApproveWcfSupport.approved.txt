@@ -22,7 +22,7 @@ namespace NServiceBus
         public static NServiceBus.WcfSettings Wcf(this NServiceBus.EndpointConfiguration configuration) { }
     }
     [System.ServiceModel.ServiceBehaviorAttribute(ConcurrencyMode=System.ServiceModel.ConcurrencyMode.Multiple, InstanceContextMode=System.ServiceModel.InstanceContextMode.PerCall)]
-    public abstract class WcfService<TRequest, TResponse> : NServiceBus.IProvideCancellationSupport, NServiceBus.IProvideMessageSession, NServiceBus.IWcfService<TRequest, TResponse>
+    public abstract class WcfService<TRequest, TResponse> : NServiceBus.IProvideCancellationSupport, NServiceBus.IProvideMessageSession, NServiceBus.IProvideSendOptions, NServiceBus.IWcfService<TRequest, TResponse>
     {
         protected WcfService() { }
     }
@@ -30,5 +30,6 @@ namespace NServiceBus
     {
         public NServiceBus.WcfSettings Binding(System.Func<System.Type, NServiceBus.BindingConfiguration> provider) { }
         public NServiceBus.WcfSettings CancelAfter(System.Func<System.Type, System.TimeSpan> provider) { }
+        public NServiceBus.WcfSettings SendOptions(System.Func<System.Type, System.Func<NServiceBus.SendOptions>> provider) { }
     }
 }

@@ -37,5 +37,21 @@ namespace NServiceBus
             this.GetSettings().Set(WcfSupport.cancelAfterProviderKey, provider);
             return this;
         }
+
+        /// <summary>
+        /// Specifies a send option provider which allows to create a new instance of a <see cref="NServiceBus.SendOptions" /> for
+        /// each client call dispatched.
+        /// </summary>
+        /// <remarks>
+        /// The default send options provider returns a provider which returns a new
+        /// <see cref="NServiceBus.SendOptions" /> instance with <see cref="RoutingOptionExtensions.RouteToThisEndpoint" /> for
+        /// each service type.
+        /// </remarks>
+        /// <param name="provider">The send options provider.</param>
+        public WcfSettings SendOptions(Func<Type, Func<SendOptions>> provider)
+        {
+            this.GetSettings().Set(WcfSupport.sendOptionsProviderKey, provider);
+            return this;
+        }
     }
 }

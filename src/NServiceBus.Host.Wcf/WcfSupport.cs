@@ -12,6 +12,12 @@
             EnableByDefault();
             Defaults(s => s.SetDefault(bindingProviderKey, new Func<Type, BindingConfiguration>(t => new BindingConfiguration(new BasicHttpBinding()))));
             Defaults(s => s.SetDefault(cancelAfterProviderKey, new Func<Type, TimeSpan>(t => TimeSpan.FromSeconds(60))));
+            Defaults(s => s.SetDefault(sendOptionsProviderKey, new Func<Type, Func<SendOptions>>(t => () =>
+            {
+                var sendOptions = new SendOptions();
+                sendOptions.RouteToThisEndpoint();
+                return sendOptions;
+            })));
         }
 
         protected override void Setup(FeatureConfigurationContext context)
@@ -22,12 +28,14 @@
 
             var bindingProvider = context.Settings.Get<Func<Type, BindingConfiguration>>(bindingProviderKey);
             var cancelAfterProvider = context.Settings.Get<Func<Type, TimeSpan>>(cancelAfterProviderKey);
+            var sendOptionsProvider = context.Settings.Get<Func<Type, Func<SendOptions>>>(sendOptionsProviderKey);
 
-            context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes, bindingProvider, cancelAfterProvider)));
+            context.RegisterStartupTask(new StartupTask(new WcfManager(serviceTypes, bindingProvider, cancelAfterProvider, sendOptionsProvider)));
         }
 
         public const string bindingProviderKey = "BindingProvider";
         public const string cancelAfterProviderKey = "CancelAfterProvider";
+        public const string sendOptionsProviderKey = "SendOptionsProvider";
 
         class StartupTask : FeatureStartupTask
         {

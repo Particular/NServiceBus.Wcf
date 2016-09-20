@@ -8,9 +8,10 @@ namespace NServiceBus.Hosting.Wcf
 
     class WcfServiceHost : ServiceHost
     {
-        public WcfServiceHost(Type t, IMessageSession session, TimeSpan cancelAfter)
+        public WcfServiceHost(Type t, IMessageSession session, TimeSpan cancelAfter, Func<SendOptions> sendOptionsProvider)
             : base(t)
         {
+            this.sendOptionsProvider = sendOptionsProvider;
             this.cancelAfter = cancelAfter;
             this.session = session;
         }
@@ -43,6 +44,7 @@ namespace NServiceBus.Hosting.Wcf
             {
                 cd.Behaviors.Add(new MessageSessionInspectorContractBehavior(session));
                 cd.Behaviors.Add(new CancelAfterContractBehavior(cancelAfter));
+                cd.Behaviors.Add(new SendOptionsProviderContractBehavior(sendOptionsProvider));
             }
 
             if (!endpointAlreadyConfigured)
@@ -53,5 +55,6 @@ namespace NServiceBus.Hosting.Wcf
 
         IMessageSession session;
         TimeSpan cancelAfter;
+        Func<SendOptions> sendOptionsProvider;
     }
 }
