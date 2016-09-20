@@ -77,9 +77,11 @@
     <Compile Include="ScenarioDescriptors\Serializers.cs" />
     <Compile Include="ScenarioDescriptors\Transports.cs" />
     <Compile Include="When_cancelling_request.cs" />
-    <Compile Include="When_providing_send_options.cs" />
+    <Compile Include="When_sending_to_a_different_endpoint.cs" />
+    <Compile Include="When_unobtrusive_sending_to_a_different_endpoint.cs" />
     <Compile Include="When_using_message_response.cs" />
     <Compile Include="When_using_enum_response.cs" />
+    <Compile Include="When_using_unobtrusive_message_with_response.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Host.Wcf\NServiceBus.Host.Wcf.csproj">
