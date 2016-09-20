@@ -21,7 +21,10 @@ namespace NServiceBus.AcceptanceTests
                     var pipeProxy = pipeFactory.CreateChannel();
                     try
                     {
-                        var response = await pipeProxy.Process(new MyMessage { Id = messageId });
+                        var response = await pipeProxy.Process(new MyMessage
+                        {
+                            Id = messageId
+                        });
                         c.Id = response.Id;
                     }
                     catch (FaultException ex)
@@ -51,12 +54,15 @@ namespace NServiceBus.AcceptanceTests
                 EndpointSetup<DefaultServer>(c =>
                 {
                     c.MakeInstanceUniquelyAddressable("1");
-                    c.BindingProvider(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")));
-                    c.CancelAfterProvider(t => t.IsAssignableFrom(typeof(MyService)) ? TimeSpan.Zero : TimeSpan.FromSeconds(5));
+                    c.Wcf()
+                        .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
+                        .CancelAfter(t => t.IsAssignableFrom(typeof(MyService)) ? TimeSpan.Zero : TimeSpan.FromSeconds(5));
                 });
             }
 
-            public class MyService : WcfService<MyMessage, MyResponse> { }
+            public class MyService : WcfService<MyMessage, MyResponse>
+            {
+            }
 
             public class MyMessageHandler : IHandleMessages<MyMessage>
             {
@@ -65,7 +71,10 @@ namespace NServiceBus.AcceptanceTests
                 public Task Handle(MyMessage message, IMessageHandlerContext context)
                 {
                     Context.HandlerCalled = true;
-                    return context.Reply(new MyResponse { Id = message.Id });
+                    return context.Reply(new MyResponse
+                    {
+                        Id = message.Id
+                    });
                 }
             }
         }

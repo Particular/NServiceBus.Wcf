@@ -71,6 +71,7 @@
     <Compile Include="WcfManager.cs" />
     <Compile Include="WcfService.cs" />
     <Compile Include="WcfServiceHost.cs" />
+    <Compile Include="WcfSettings.cs" />
     <Compile Include="WcfSupport.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="AssemblyInfo.cs" />
