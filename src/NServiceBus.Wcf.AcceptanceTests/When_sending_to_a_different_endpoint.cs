@@ -49,7 +49,7 @@ namespace NServiceBus.AcceptanceTests
                     c.MakeInstanceUniquelyAddressable("1");
                     c.Wcf()
                         .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
-                        .SendOptions(t => () =>
+                        .RouteWith(t => () =>
                         {
                             var options = new SendOptions();
                             options.SetDestination(Conventions.EndpointNamingConvention(typeof(AnotherEndpoint)));

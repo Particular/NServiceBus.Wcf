@@ -30,6 +30,6 @@ namespace NServiceBus
     {
         public NServiceBus.WcfSettings Binding(System.Func<System.Type, NServiceBus.BindingConfiguration> provider) { }
         public NServiceBus.WcfSettings CancelAfter(System.Func<System.Type, System.TimeSpan> provider) { }
-        public NServiceBus.WcfSettings SendOptions(System.Func<System.Type, System.Func<NServiceBus.SendOptions>> provider) { }
+        public NServiceBus.WcfSettings RouteWith(System.Func<System.Type, System.Func<NServiceBus.SendOptions>> provider) { }
     }
 }

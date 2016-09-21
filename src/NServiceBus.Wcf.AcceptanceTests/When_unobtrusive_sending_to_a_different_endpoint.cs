@@ -52,7 +52,7 @@ namespace NServiceBus.AcceptanceTests
                         .DefiningMessagesAs(t => t.Namespace != null && t.Name.EndsWith("MyResponse"));
                     c.Wcf()
                         .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
-                        .SendOptions(t => () =>
+                        .RouteWith(t => () =>
                         {
                             var options = new SendOptions();
                             options.SetDestination(Conventions.EndpointNamingConvention(typeof(AnotherEndpoint)));

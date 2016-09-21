@@ -10,10 +10,10 @@
     /// </summary>
     class WcfManager
     {
-        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, BindingConfiguration> bindingProvider, Func<Type, TimeSpan> cancelAfterProvider, Func<Type, Func<SendOptions>> sendOptionsProvider)
+        public WcfManager(IEnumerable<Type> serviceTypes, Func<Type, BindingConfiguration> bindingProvider, Func<Type, TimeSpan> cancelAfterProvider, Func<Type, Func<SendOptions>> routeProvider)
         {
             this.cancelAfterProvider = cancelAfterProvider;
-            this.sendOptionsProvider = sendOptionsProvider;
+            this.routeProvider = routeProvider;
             this.bindingProvider = bindingProvider;
             this.serviceTypes = serviceTypes;
         }
@@ -27,7 +27,7 @@
             foreach (var serviceType in serviceTypes)
             {
                 var cancelAfter = cancelAfterProvider(serviceType);
-                var optionsProvider = sendOptionsProvider(serviceType);
+                var optionsProvider = routeProvider(serviceType);
                 var host = new WcfServiceHost(serviceType, session, cancelAfter, optionsProvider);
 
                 var bindingAndAddress = bindingProvider(serviceType);
@@ -60,6 +60,6 @@
         IEnumerable<Type> serviceTypes;
         Func<Type, BindingConfiguration> bindingProvider;
         Func<Type, TimeSpan> cancelAfterProvider;
-        readonly Func<Type, Func<SendOptions>> sendOptionsProvider;
+        readonly Func<Type, Func<SendOptions>> routeProvider;
     }
 }
