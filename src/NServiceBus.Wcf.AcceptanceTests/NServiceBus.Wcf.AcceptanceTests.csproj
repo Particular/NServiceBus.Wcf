@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{43A533C4-AAEF-449C-A1C9-4BF00EB063BE}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>NServiceBus.Host.Wcf.AcceptanceTests</RootNamespace>
-    <AssemblyName>NServiceBus.Host.Wcf.AcceptanceTests</AssemblyName>
+    <RootNamespace>NServiceBus.Wcf.AcceptanceTests</RootNamespace>
+    <AssemblyName>NServiceBus.Wcf.AcceptanceTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -56,11 +56,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureEndpointInMemoryPersistence.cs" />
@@ -84,9 +80,9 @@
     <Compile Include="When_using_unobtrusive_message_with_response.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBus.Host.Wcf\NServiceBus.Host.Wcf.csproj">
-      <Project>{b465a2ef-27a9-402b-bac7-a660be93c931}</Project>
-      <Name>NServiceBus.Callbacks</Name>
+    <ProjectReference Include="..\NServiceBus.Wcf\NServiceBus.Wcf.csproj">
+      <Project>{b465a2ef-27a9-402b-bac7-A660BE93C931}</Project>
+      <Name>NServiceBus.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

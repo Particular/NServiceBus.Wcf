@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host.Wcf", "NServiceBus.Host.Wcf\NServiceBus.Host.Wcf.csproj", "{B465A2EF-27A9-402B-BAC7-A660BE93C931}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Wcf", "NServiceBus.Wcf\NServiceBus.Wcf.csproj", "{B465A2EF-27A9-402B-BAC7-A660BE93C931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host.Wcf.AcceptanceTests", "NServiceBus.Host.Wcf.AcceptanceTests\NServiceBus.Host.Wcf.AcceptanceTests.csproj", "{43A533C4-AAEF-449C-A1C9-4BF00EB063BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Wcf.AcceptanceTests", "NServiceBus.Wcf.AcceptanceTests\NServiceBus.Wcf.AcceptanceTests.csproj", "{43A533C4-AAEF-449C-A1C9-4BF00EB063BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Host.Wcf.Tests", "NServiceBus.Host.Wcf.Tests\NServiceBus.Host.Wcf.Tests.csproj", "{AE0CB75D-1052-4715-97A0-0099B36BD597}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Wcf.Tests", "NServiceBus.Wcf.Tests\NServiceBus.Wcf.Tests.csproj", "{AE0CB75D-1052-4715-97A0-0099B36BD597}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

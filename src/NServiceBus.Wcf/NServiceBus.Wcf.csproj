@@ -8,8 +8,8 @@
     <ProjectGuid>{B465A2EF-27A9-402B-BAC7-A660BE93C931}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBus.Host.Wcf</RootNamespace>
-    <AssemblyName>NServiceBus.Host.Wcf</AssemblyName>
+    <RootNamespace>NServiceBus.Wcf</RootNamespace>
+    <AssemblyName>NServiceBus.Wcf</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.Host.Wcf.xml</DocumentationFile>
+    <DocumentationFile>..\..\binaries\NServiceBus.Wcf.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
@@ -38,7 +38,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\binaries\NServiceBus.Host.Wcf.xml</DocumentationFile>
+    <DocumentationFile>..\..\binaries\NServiceBus.Wcf.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
@@ -80,7 +80,7 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nservicebus.host.wcf.nuspec" />
+    <None Include="..\..\packaging\nuget\nservicebus.wcf.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>NServiceBus.Host.Wcf</id>
-    <title>NServiceBus Host Wcf</title>
+    <id>NServiceBus.Wcf</id>
+    <title>NServiceBus Wcf</title>
     <version>$version$</version>
     <authors>$authors$</authors>
     <owners>$owners$</owners>
@@ -10,13 +10,14 @@
     <projectUrl>$projectUrl$</projectUrl>
     <iconUrl>$iconUrl$</iconUrl>
     <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
-    <description>The most popular open-source service bus for .net</description>
+    <description>WCF support for bridging between WCF and the messaging infrastructure.</description>
     <releaseNotes></releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>$tags$</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net452" />
       <frameworkAssembly assemblyName="System.Core" targetFramework="net452" />
+      <frameworkAssembly assemblyName="System.ServiceModel" targetFramework="net452" />
     </frameworkAssemblies>
     <dependencies>
       <dependency id="NServiceBus" version="[6.0.0-RC0002, 7.0.0)" />
@@ -24,6 +25,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\binaries\NServiceBus.Host.Wcf.???" target="lib\net452" />
+    <file src="..\..\binaries\NServiceBus.Wcf.???" target="lib\net452" />
   </files>
 </package>

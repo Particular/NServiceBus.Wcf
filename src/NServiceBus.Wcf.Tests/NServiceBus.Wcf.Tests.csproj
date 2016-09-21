@@ -7,8 +7,8 @@
     <ProjectGuid>{AE0CB75D-1052-4715-97A0-0099B36BD597}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBus.Host.Wcf.Tests</RootNamespace>
-    <AssemblyName>NServiceBus.Host.Wcf.Tests</AssemblyName>
+    <RootNamespace>NServiceBus.Wcf.Tests</RootNamespace>
+    <AssemblyName>NServiceBus.Wcf.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -94,9 +94,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBus.Host.Wcf\NServiceBus.Host.Wcf.csproj">
-      <Project>{b465a2ef-27a9-402b-bac7-a660be93c931}</Project>
-      <Name>NServiceBus.Callbacks</Name>
+    <ProjectReference Include="..\NServiceBus.Wcf\NServiceBus.Wcf.csproj">
+      <Project>{b465a2ef-27a9-402b-bac7-A660BE93C931}</Project>
+      <Name>NServiceBus.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
