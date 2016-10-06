@@ -20,8 +20,8 @@
       <frameworkAssembly assemblyName="System.ServiceModel" targetFramework="net452" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="NServiceBus" version="[6.0.0-RC0002, 7.0.0)" />
-      <dependency id="NServiceBus.Callbacks" version="[6.0.0-RC0002, 7.0.0)" />
+      <dependency id="NServiceBus" version="[6.0.0, 7.0.0)" />
+      <dependency id="NServiceBus.Callbacks" version="[1.0.0, 2.0.0)" />
     </dependencies>
   </metadata>
   <files>
