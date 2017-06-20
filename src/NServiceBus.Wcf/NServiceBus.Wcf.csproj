@@ -16,7 +16,7 @@
   <ItemGroup>
     <PackageReference Include="NServiceBus" Version="6.1.0" />
     <PackageReference Include="NServiceBus.Callbacks" Version="1.0.0" />
-    <None Include="..\..\packaging\nuget\nservicebus.wcf.nuspec" />
+    <None Include="..\..\packaging\nuget\nservicebus.wcf.nuspec" Link="nservicebus.wcf.nuspec" />
     <PackageReference Include="NuGetPackager" Version="0.6.3" />
     <PackageReference Include="GitVersionTask" Version="4.0.0-beta0012" />
     <Reference Include="System.Configuration" />
