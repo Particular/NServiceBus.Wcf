@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.AcceptanceTesting.Customization;
 using NServiceBus.AcceptanceTesting.Support;
-using NServiceBus.Configuration.AdvancedExtensibility;
-using NServiceBus.Features;
 
 public class DefaultServer : IEndpointSetupTemplate
 {
@@ -31,11 +29,10 @@ public class DefaultServer : IEndpointSetupTemplate
         configuration.TypesToIncludeInScan(typesToInclude);
         configuration.EnableInstallers();
 
-        configuration.DisableFeature<TimeoutManager>();
-
         var recoverability = configuration.Recoverability();
         recoverability.Delayed(delayed => delayed.NumberOfRetries(0));
         recoverability.Immediate(immediate => immediate.NumberOfRetries(0));
+
         var storageDir = Path.Combine(NServiceBusAcceptanceTest.StorageRootDir, NUnit.Framework.TestContext.CurrentContext.Test.ID);
 
         configuration.UseTransport<LearningTransport>()
@@ -43,8 +40,6 @@ public class DefaultServer : IEndpointSetupTemplate
 
         configuration.RegisterComponentsAndInheritanceHierarchy(runDescriptor);
 
-
-        configuration.GetSettings().SetDefault("ScaleOut.UseSingleBrokerQueue", true);
         configurationBuilderCustomization(configuration);
 
         return Task.FromResult(configuration);

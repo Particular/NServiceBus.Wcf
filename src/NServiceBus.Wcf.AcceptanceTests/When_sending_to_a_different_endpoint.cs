@@ -44,6 +44,7 @@ public class When_sending_to_a_different_endpoint : NServiceBusAcceptanceTest
             EndpointSetup<DefaultServer>(c =>
             {
                 c.MakeInstanceUniquelyAddressable("1");
+                c.EnableCallbacks();
                 c.Wcf()
                     .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
                     .RouteWith(t => () =>

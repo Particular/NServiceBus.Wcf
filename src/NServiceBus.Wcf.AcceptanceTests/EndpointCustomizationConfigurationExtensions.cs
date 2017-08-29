@@ -11,14 +11,10 @@ public static class EndpointCustomizationConfigurationExtensions
     {
         var assemblies = new AssemblyScanner().GetScannableAssemblies();
 
-        var types = assemblies.Assemblies
-            //exclude all test types by default
-            .Where(a =>
-            {
-                var references = a.GetReferencedAssemblies();
-
-                return references.All(an => an.Name != "nunit.framework");
-            })
+        var assembliesToScan = assemblies.Assemblies
+            //exclude acceptance tests by default
+            .Where(a => a != Assembly.GetExecutingAssembly()).ToList();
+        var types = assembliesToScan
             .SelectMany(a => a.GetTypes());
 
         types = types.Union(GetNestedTypeRecursive(endpointConfiguration.BuilderType.DeclaringType, endpointConfiguration.BuilderType));
@@ -31,20 +27,14 @@ public static class EndpointCustomizationConfigurationExtensions
     static IEnumerable<Type> GetNestedTypeRecursive(Type rootType, Type builderType)
     {
         if (rootType == null)
-        {
             throw new InvalidOperationException("Make sure you nest the endpoint infrastructure inside the TestFixture as nested classes");
-        }
 
         yield return rootType;
 
         if (typeof(IEndpointConfigurationFactory).IsAssignableFrom(rootType) && rootType != builderType)
-        {
             yield break;
-        }
 
         foreach (var nestedType in rootType.GetNestedTypes(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).SelectMany(t => GetNestedTypeRecursive(t, builderType)))
-        {
             yield return nestedType;
-        }
     }
 }

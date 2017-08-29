@@ -48,6 +48,7 @@ public class When_using_enum_response : NServiceBusAcceptanceTest
             EndpointSetup<DefaultServer>(c =>
             {
                 c.MakeInstanceUniquelyAddressable("1");
+                c.EnableCallbacks();
                 c.Wcf().Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")));
             });
         }

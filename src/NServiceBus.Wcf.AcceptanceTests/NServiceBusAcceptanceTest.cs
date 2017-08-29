@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using NServiceBus.AcceptanceTesting;
 using NServiceBus.AcceptanceTesting.Customization;
 using NUnit.Framework;
 
@@ -37,6 +38,8 @@ public abstract class NServiceBusAcceptanceTest
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
+        Scenario.GetLoggerFactory = ctx => new StaticLoggerFactory(ctx);
+
         if (Directory.Exists(StorageRootDir))
         {
             Directory.Delete(StorageRootDir, true);
