@@ -1,6 +1,6 @@
 namespace NServiceBus
 {
-    using Configuration.AdvanceExtensibility;
+    using Configuration.AdvancedExtensibility;
 
     /// <summary>
     /// Configuration extensions for Wcf support.

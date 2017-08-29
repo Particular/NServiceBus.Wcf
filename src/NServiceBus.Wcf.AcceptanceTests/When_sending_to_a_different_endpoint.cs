@@ -1,101 +1,97 @@
-namespace NServiceBus.AcceptanceTests
+using System;
+using System.ServiceModel;
+using System.Threading.Tasks;
+using NServiceBus;
+using NServiceBus.AcceptanceTesting;
+using NUnit.Framework;
+
+public class When_sending_to_a_different_endpoint : NServiceBusAcceptanceTest
 {
-    using System;
-    using System.ServiceModel;
-    using System.Threading.Tasks;
-    using AcceptanceTesting;
-    using AcceptanceTesting.Customization;
-    using EndpointTemplates;
-    using NUnit.Framework;
-
-    public class When_sending_to_a_different_endpoint : NServiceBusAcceptanceTest
+    [Test]
+    public async Task Response_should_be_received()
     {
-        [Test]
-        public async Task Response_should_be_received()
-        {
-            var messageId = Guid.NewGuid();
+        var messageId = Guid.NewGuid();
 
-            var context = await Scenario.Define<Context>()
-                .WithEndpoint<AnotherEndpoint>()
-                .WithEndpoint<Endpoint>(b => b.When(async (session, c) =>
-                {
-                    var pipeFactory = new ChannelFactory<IWcfService<MyMessage, MyResponse>>(new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/MyService"));
-                    var pipeProxy = pipeFactory.CreateChannel();
-                    var response = await pipeProxy.Process(new MyMessage
-                    {
-                        Id = messageId
-                    });
-                    c.Id = response.Id;
-                }))
-                .Done(c => c.HandlerCalled && c.Id.HasValue)
-                .Run();
-
-            Assert.IsTrue(context.HandlerCalled);
-            Assert.AreEqual(messageId, context.Id);
-        }
-
-        class Context : ScenarioContext
-        {
-            public bool HandlerCalled { get; set; }
-            public Guid? Id { get; set; }
-        }
-
-        class Endpoint : EndpointConfigurationBuilder
-        {
-            public Endpoint()
+        var context = await Scenario.Define<Context>()
+            .WithEndpoint<AnotherEndpoint>()
+            .WithEndpoint<Endpoint>(b => b.When(async (session, c) =>
             {
-                EndpointSetup<DefaultServer>(c =>
+                var pipeFactory = new ChannelFactory<IWcfService<MyMessage, MyResponse>>(new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/MyService"));
+                var pipeProxy = pipeFactory.CreateChannel();
+                var response = await pipeProxy.Process(new MyMessage
                 {
-                    c.MakeInstanceUniquelyAddressable("1");
-                    c.Wcf()
-                        .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
-                        .RouteWith(t => () =>
-                        {
-                            var options = new SendOptions();
-                            options.SetDestination(Conventions.EndpointNamingConvention(typeof(AnotherEndpoint)));
-                            return options;
-                        });
+                    Id = messageId
+                });
+                c.Id = response.Id;
+            }))
+            .Done(c => c.HandlerCalled && c.Id.HasValue)
+            .Run();
+
+        Assert.IsTrue(context.HandlerCalled);
+        Assert.AreEqual(messageId, context.Id);
+    }
+
+    class Context : ScenarioContext
+    {
+        public bool HandlerCalled { get; set; }
+        public Guid? Id { get; set; }
+    }
+
+    class Endpoint : EndpointConfigurationBuilder
+    {
+        public Endpoint()
+        {
+            EndpointSetup<DefaultServer>(c =>
+            {
+                c.MakeInstanceUniquelyAddressable("1");
+                c.Wcf()
+                    .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
+                    .RouteWith(t => () =>
+                    {
+                        var options = new SendOptions();
+                        options.SetDestination(NServiceBus.AcceptanceTesting.Customization.Conventions.EndpointNamingConvention(typeof(AnotherEndpoint)));
+                        return options;
+                    });
+            });
+        }
+
+        public class MyService : WcfService<MyMessage, MyResponse>
+        {
+        }
+    }
+
+    class AnotherEndpoint : EndpointConfigurationBuilder
+    {
+        public AnotherEndpoint()
+        {
+            EndpointSetup<DefaultServer>(c =>
+            {
+                c.MakeInstanceUniquelyAddressable("1");
+            });
+        }
+
+        public class MyMessageHandler : IHandleMessages<MyMessage>
+        {
+            public Context Context { get; set; }
+
+            public Task Handle(MyMessage message, IMessageHandlerContext context)
+            {
+                Context.HandlerCalled = true;
+                return context.Reply(new MyResponse
+                {
+                    Id = message.Id
                 });
             }
-
-            public class MyService : WcfService<MyMessage, MyResponse>
-            {
-            }
         }
+    }
 
-        class AnotherEndpoint : EndpointConfigurationBuilder
-        {
-            public AnotherEndpoint()
-            {
-                EndpointSetup<DefaultServer>(c =>
-                {
-                    c.MakeInstanceUniquelyAddressable("1");
-                });
-            }
+    public class MyMessage : ICommand
+    {
+        public Guid Id { get; set; }
+    }
 
-            public class MyMessageHandler : IHandleMessages<MyMessage>
-            {
-                public Context Context { get; set; }
-
-                public Task Handle(MyMessage message, IMessageHandlerContext context)
-                {
-                    Context.HandlerCalled = true;
-                    return context.Reply(new MyResponse
-                    {
-                        Id = message.Id
-                    });
-                }
-            }
-        }
-
-        public class MyMessage : ICommand
-        {
-            public Guid Id { get; set; }
-        }
-
-        public class MyResponse : IMessage
-        {
-            public Guid Id { get; set; }
-        }
+    public class MyResponse : IMessage
+    {
+        public Guid Id { get; set; }
     }
 }
