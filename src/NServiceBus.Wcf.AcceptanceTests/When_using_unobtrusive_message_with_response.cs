@@ -43,9 +43,10 @@ public class When_using_unobtrusive_message_with_response : NServiceBusAcceptanc
             EndpointSetup<DefaultServer>(c =>
             {
                 c.MakeInstanceUniquelyAddressable("1");
+                c.EnableCallbacks();
                 c.Conventions()
-                    .DefiningCommandsAs(t => t.Namespace != null && t.Name.EndsWith("MyMessage"))
-                    .DefiningMessagesAs(t => t.Namespace != null && t.Name.EndsWith("MyResponse"));
+                    .DefiningCommandsAs(t => t.Name.EndsWith("MyMessage"))
+                    .DefiningMessagesAs(t => t.Name.EndsWith("MyResponse"));
 
                 c.Wcf().Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")));
             });

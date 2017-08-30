@@ -15,9 +15,9 @@ public class When_unobtrusive_sending_to_a_different_endpoint : NServiceBusAccep
 
         var context = await Scenario.Define<Context>()
             .WithEndpoint<AnotherEndpoint>()
-            .WithEndpoint<Endpoint>(b => b.When(async (session, c) =>
+            .WithEndpoint<Endpoint>(b => b.When(context1 => context1.EndpointsStarted, async (session, c) =>
             {
-                var pipeFactory = new ChannelFactory<IWcfService<MyMessage, MyResponse>>(new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/MyService"));
+                var pipeFactory = new ChannelFactory<IWcfService<MyMessage, MyResponse>>(new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/MyService3"));
                 var pipeProxy = pipeFactory.CreateChannel();
                 var response = await pipeProxy.Process(new MyMessage
                 {
@@ -47,10 +47,10 @@ public class When_unobtrusive_sending_to_a_different_endpoint : NServiceBusAccep
                 c.MakeInstanceUniquelyAddressable("1");
                 c.EnableCallbacks();
                 c.Conventions()
-                    .DefiningCommandsAs(t => t.Namespace != null && t.Name.EndsWith("MyMessage"))
-                    .DefiningMessagesAs(t => t.Namespace != null && t.Name.EndsWith("MyResponse"));
+                    .DefiningCommandsAs(t => t.Name.EndsWith("MyMessage"))
+                    .DefiningMessagesAs(t => t.Name.EndsWith("MyResponse"));
                 c.Wcf()
-                    .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService")))
+                    .Binding(t => new BindingConfiguration(new NetNamedPipeBinding(), new Uri("net.pipe://localhost/MyService3")))
                     .RouteWith(t => () =>
                     {
                         var options = new SendOptions();
@@ -73,8 +73,8 @@ public class When_unobtrusive_sending_to_a_different_endpoint : NServiceBusAccep
             {
                 c.MakeInstanceUniquelyAddressable("1");
                 c.Conventions()
-                    .DefiningCommandsAs(t => t.Namespace != null && t.Name.EndsWith("MyMessage"))
-                    .DefiningMessagesAs(t => t.Namespace != null && t.Name.EndsWith("MyResponse"));
+                    .DefiningCommandsAs(t => t.Name.EndsWith("MyMessage"))
+                    .DefiningMessagesAs(t => t.Name.EndsWith("MyResponse"));
             });
         }
 

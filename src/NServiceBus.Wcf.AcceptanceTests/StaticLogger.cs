@@ -106,11 +106,18 @@ namespace NServiceBus.AcceptanceTesting
         void Log(string message, LogLevel messageSeverity)
         {
             if (context.LogLevel > messageSeverity)
+            {
                 return;
+            }
 
-            Console.WriteLine(message);
+            var logItem = new ScenarioContext.LogItem
+            {
+                Level = messageSeverity,
+                Message = message
+            };
+            context.Logs.Enqueue(logItem);
         }
 
-        readonly ScenarioContext context;
+        ScenarioContext context;
     }
 }
