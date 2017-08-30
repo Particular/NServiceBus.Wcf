@@ -5,16 +5,11 @@ namespace NServiceBus.AcceptanceTesting
 
     class StaticLogger : ILog
     {
-        public StaticLogger(ScenarioContext context)
-        {
-            this.context = context;
-        }
-
-        public bool IsDebugEnabled => context.LogLevel <= LogLevel.Debug;
-        public bool IsInfoEnabled => context.LogLevel <= LogLevel.Info;
-        public bool IsWarnEnabled => context.LogLevel <= LogLevel.Warn;
-        public bool IsErrorEnabled => context.LogLevel <= LogLevel.Error;
-        public bool IsFatalEnabled => context.LogLevel <= LogLevel.Fatal;
+        public bool IsDebugEnabled => StaticLoggerFactory.CurrentContext.LogLevel <= LogLevel.Debug;
+        public bool IsInfoEnabled => StaticLoggerFactory.CurrentContext.LogLevel <= LogLevel.Info;
+        public bool IsWarnEnabled => StaticLoggerFactory.CurrentContext.LogLevel <= LogLevel.Warn;
+        public bool IsErrorEnabled => StaticLoggerFactory.CurrentContext.LogLevel <= LogLevel.Error;
+        public bool IsFatalEnabled => StaticLoggerFactory.CurrentContext.LogLevel <= LogLevel.Fatal;
 
 
         public void Debug(string message)
@@ -105,7 +100,7 @@ namespace NServiceBus.AcceptanceTesting
 
         void Log(string message, LogLevel messageSeverity)
         {
-            if (context.LogLevel > messageSeverity)
+            if (StaticLoggerFactory.CurrentContext.LogLevel > messageSeverity)
             {
                 return;
             }
@@ -115,9 +110,7 @@ namespace NServiceBus.AcceptanceTesting
                 Level = messageSeverity,
                 Message = message
             };
-            context.Logs.Enqueue(logItem);
+            StaticLoggerFactory.CurrentContext.Logs.Enqueue(logItem);
         }
-
-        ScenarioContext context;
     }
 }
