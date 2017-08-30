@@ -6,18 +6,18 @@ public class StaticLoggerFactory : ILoggerFactory
 {
     public StaticLoggerFactory(ScenarioContext ctx)
     {
-        this.ctx = ctx;
+        CurrentContext = ctx;
     }
 
     public ILog GetLogger(Type type)
     {
-        return new StaticLogger(ctx);
+        return new StaticLogger();
     }
 
     public ILog GetLogger(string name)
     {
-        return new StaticLogger(ctx);
+        return new StaticLogger();
     }
 
-    ScenarioContext ctx;
+    internal static ScenarioContext CurrentContext;
 }

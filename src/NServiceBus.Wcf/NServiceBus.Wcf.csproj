@@ -15,7 +15,6 @@
   <ItemGroup>
     <PackageReference Include="NServiceBus" Version="[7.0.0-*, 8.0.0)" />
     <PackageReference Include="NServiceBus.Callbacks" Version="[3.0.0-*, 4.0.0)" />
-    <PackageReference Include="GitVersionTask" Version="4.0.0-*" PrivateAssets="All" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
