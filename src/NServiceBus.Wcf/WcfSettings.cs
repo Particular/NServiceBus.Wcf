@@ -2,7 +2,7 @@ namespace NServiceBus
 {
     using System;
     using System.ServiceModel;
-    using Configuration.AdvanceExtensibility;
+    using Configuration.AdvancedExtensibility;
     using Features;
     using Settings;
 
