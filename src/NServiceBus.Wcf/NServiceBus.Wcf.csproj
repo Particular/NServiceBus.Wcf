@@ -4,7 +4,6 @@
     <TargetFramework>net452</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)NServiceBus.snk</AssemblyOriginatorKeyFile>
-    <NoWarn>CS0419</NoWarn>
     <Description>WCF support for bridging between WCF and the messaging infrastructure</Description>
   </PropertyGroup>
 
