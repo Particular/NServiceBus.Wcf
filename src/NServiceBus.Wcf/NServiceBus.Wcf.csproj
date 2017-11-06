@@ -7,14 +7,7 @@
     <Description>WCF support for bridging between WCF and the messaging infrastructure</Description>
   </PropertyGroup>
 
-  <!--Workaround for https://github.com/dotnet/sdk/issues/1469 -->
-  <PropertyGroup>
-    <DisableLockFileFrameworks>true</DisableLockFileFrameworks>
-  </PropertyGroup>
-  <!-- End Workaround -->
-
   <ItemGroup>
-    <Reference Include="System.Configuration" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
