@@ -34,13 +34,11 @@ public class When_cancelling_request : NServiceBusAcceptanceTest
             .Run(TimeSpan.FromSeconds(10));
 
         Assert.That(context.Exception.Message, Does.Contain("The request was cancelled after"));
-        Assert.IsFalse(context.HandlerCalled);
         Assert.IsNull(context.Id);
     }
 
     class Context : ScenarioContext
     {
-        public bool HandlerCalled { get; set; }
         public FaultException Exception { get; set; }
         public Guid? Id { get; set; }
     }
@@ -65,11 +63,8 @@ public class When_cancelling_request : NServiceBusAcceptanceTest
 
         public class MyMessageHandler : IHandleMessages<MyMessage>
         {
-            public Context Context { get; set; }
-
             public Task Handle(MyMessage message, IMessageHandlerContext context)
             {
-                Context.HandlerCalled = true;
                 return context.Reply(new MyResponse
                 {
                     Id = message.Id
