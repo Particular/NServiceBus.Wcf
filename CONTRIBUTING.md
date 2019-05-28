@@ -14,14 +14,12 @@ top of things.
 
 ## Making Changes
 
-* Create a feature branch from where you want to base your work.
-  * This is usually the develop branch since we never do any work off our master branch. The master is always our latest stable release
+* Create a feature branch from where you want to base your work. (usually `master`)
   * Only target release branches if you are certain your fix must be on that
-    branch.
-  * To quickly create a feature branch based on develop; `git branch
-    fix/develop/my_contribution` then checkout the new branch with `git
-    checkout fix/develop/my_contribution`.  Please avoid working directly on the
-    `develop` branch.
+    specific release.
+  * To quickly create a feature branch based on master; `git branch
+    fix/master/my_contribution` then checkout the new branch with `git
+    checkout fix/master/my_contribution`.  
 * Make commits of logical units.
 * Check for unnecessary whitespace with `git diff --check` before committing.
 * Make sure your commit messages are in the proper format.
