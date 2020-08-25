@@ -73,11 +73,16 @@ public class When_sending_to_a_different_endpoint : NServiceBusAcceptanceTest
 
         public class MyMessageHandler : IHandleMessages<MyMessage>
         {
-            public Context Context { get; set; }
+            Context testContext;
+
+            public MyMessageHandler(Context testContext)
+            {
+                this.testContext = testContext;
+            }
 
             public Task Handle(MyMessage message, IMessageHandlerContext context)
             {
-                Context.HandlerCalled = true;
+                testContext.HandlerCalled = true;
                 return context.Reply(new MyResponse
                 {
                     Id = message.Id
