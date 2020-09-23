@@ -12,7 +12,7 @@ namespace NServiceBus
         /// <summary>
         /// Sends the message to the messaging endpoint.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="request">The message to be sent.</param>
         /// <returns>Returns the result received from the messaging endpoint.</returns>
         [OperationContract]
         Task<TResponse> Process(TRequest request);

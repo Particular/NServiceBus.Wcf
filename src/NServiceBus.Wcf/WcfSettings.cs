@@ -22,7 +22,7 @@ namespace NServiceBus
         /// <param name="provider">The binding provider.</param>
         public WcfSettings Binding(Func<Type, BindingConfiguration> provider)
         {
-            this.GetSettings().Set(WcfSupport.bindingProviderKey, provider);
+            this.GetSettings().Set(WcfSupport.BindingProviderKey, provider);
             return this;
         }
 
@@ -34,7 +34,7 @@ namespace NServiceBus
         /// <param name="provider">The binding provider.</param>
         public WcfSettings CancelAfter(Func<Type, TimeSpan> provider)
         {
-            this.GetSettings().Set(WcfSupport.cancelAfterProviderKey, provider);
+            this.GetSettings().Set(WcfSupport.CancelAfterProviderKey, provider);
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace NServiceBus
         /// <param name="provider">The send options provider.</param>
         public WcfSettings RouteWith(Func<Type, Func<SendOptions>> provider)
         {
-            this.GetSettings().Set(WcfSupport.routeProviderKey, provider);
+            this.GetSettings().Set(WcfSupport.RouteProviderKey, provider);
             return this;
         }
     }

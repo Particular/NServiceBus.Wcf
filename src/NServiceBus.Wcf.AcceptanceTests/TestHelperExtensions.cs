@@ -1,6 +1,6 @@
-﻿using NServiceBus;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 using NServiceBus.AcceptanceTesting.Support;
-using Microsoft.Extensions.DependencyInjection;
 
 public static class TestHelperExtensions
 {
