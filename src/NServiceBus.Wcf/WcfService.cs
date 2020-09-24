@@ -23,8 +23,10 @@ namespace NServiceBus
         /// <inheritdoc />
         TimeSpan IProvideCancellationSupport.CancelAfter { get; set; }
 
+        /// <inheritdoc/>
         Func<SendOptions> IProvideSendOptions.SendOptionsProvider { get; set; }
 
+        /// <inheritdoc/>
         async Task<TResponse> IWcfService<TRequest, TResponse>.Process(TRequest request)
         {
             using (var cts = new CancellationTokenSource(CancelProvider.CancelAfter))
