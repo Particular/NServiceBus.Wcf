@@ -9,7 +9,7 @@ public class APIApprovals
     [Test]
     public void Approve()
     {
-        var publicApi = ApiGenerator.GeneratePublicApi(typeof(WcfSettings).Assembly);
+        var publicApi = typeof(WcfSettings).Assembly.GeneratePublicApi();
         Approver.Verify(publicApi);
     }
 }
