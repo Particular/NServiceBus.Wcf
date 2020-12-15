@@ -9,7 +9,10 @@ public class APIApprovals
     [Test]
     public void Approve()
     {
-        var publicApi = typeof(WcfSettings).Assembly.GeneratePublicApi();
+        var publicApi = typeof(WcfSettings).Assembly.GeneratePublicApi(new ApiGeneratorOptions
+        {
+            ExcludeAttributes = new[] { "System.Reflection.AssemblyMetadataAttribute" }
+        });
         Approver.Verify(publicApi);
     }
 }
