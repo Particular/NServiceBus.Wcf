@@ -16,8 +16,7 @@ namespace NServiceBus.Hosting.Wcf
         public object AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
         {
             var instance = instanceContext.GetServiceInstance(request);
-            var optionsProvider = instance as IProvideSendOptions;
-            if (optionsProvider != null)
+            if (instance is IProvideSendOptions optionsProvider)
             {
                 optionsProvider.SendOptionsProvider = sendOptionsProvider;
             }

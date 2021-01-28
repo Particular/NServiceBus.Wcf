@@ -15,8 +15,7 @@ namespace NServiceBus.Hosting.Wcf
         public object AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
         {
             var instance = instanceContext.GetServiceInstance(request);
-            var sessionProvider = instance as IProvideMessageSession;
-            if (sessionProvider != null)
+            if (instance is IProvideMessageSession sessionProvider)
             {
                 sessionProvider.Session = messageSession;
             }

@@ -24,7 +24,9 @@ namespace NServiceBus.Hosting.Wcf
             var serviceModel = ServiceModelSectionGroup.GetSectionGroup(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None));
 
             if (serviceModel == null)
+            {
                 throw new InvalidOperationException("No service model section found in config");
+            }
 
             var endpointAlreadyConfigured = false;
 
@@ -35,7 +37,9 @@ namespace NServiceBus.Hosting.Wcf
                     foreach (ServiceEndpointElement endpoint in se.Endpoints)
                     {
                         if (endpoint.Contract == contractType.FullName && endpoint.Address == address)
+                        {
                             endpointAlreadyConfigured = true;
+                        }
                     }
                 }
             }
