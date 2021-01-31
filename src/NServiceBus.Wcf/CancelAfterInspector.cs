@@ -16,8 +16,7 @@ namespace NServiceBus.Hosting.Wcf
         public object AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
         {
             var instance = instanceContext.GetServiceInstance(request);
-            var cancellationProvider = instance as IProvideCancellationSupport;
-            if (cancellationProvider != null)
+            if (instance is IProvideCancellationSupport cancellationProvider)
             {
                 cancellationProvider.CancelAfter = cancelAfter;
             }
