@@ -2,6 +2,7 @@
 {
     using System;
     using System.ServiceModel;
+    using System.Threading;
     using System.Threading.Tasks;
     using Hosting.Wcf;
 
@@ -44,12 +45,12 @@
                 this.wcfManager = wcfManager;
             }
 
-            protected override Task OnStart(IMessageSession session)
+            protected override Task OnStart(IMessageSession session, CancellationToken cancellationToken)
             {
                 return wcfManager.Startup(session);
             }
 
-            protected override Task OnStop(IMessageSession session)
+            protected override Task OnStop(IMessageSession session, CancellationToken cancellationToken)
             {
                 return wcfManager.Shutdown();
             }
