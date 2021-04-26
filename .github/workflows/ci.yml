@@ -12,15 +12,9 @@ env:
   DOTNET_NOLOGO: true
 jobs:
   build:
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+    name: Windows
+    runs-on: windows-2019
     strategy:
-      matrix:
-        include:
-          - os: windows-2019
-            name: Windows
-          - os: ubuntu-20.04
-            name: Linux
       fail-fast: false
     steps:
       - name: Checkout
@@ -38,15 +32,10 @@ jobs:
       - name: Build
         run: dotnet build src --configuration Release
       - name: Upload packages
-        if: matrix.name == 'Windows'
         uses: actions/upload-artifact@v2.2.2
         with:
           name: NuGet packages
           path: nugets/
           retention-days: 7
       - name: Run Windows tests
-        if: matrix.name == 'Windows'
         run: dotnet test src --configuration Release --no-build --logger "GitHubActions;report-warnings=false"
-      - name: Run Linux tests
-        if: matrix.name == 'Linux'
-        run: dotnet test src --configuration Release --no-build --framework netcoreapp3.1 --logger "GitHubActions;report-warnings=false"
