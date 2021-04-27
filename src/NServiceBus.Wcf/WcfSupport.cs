@@ -45,14 +45,14 @@
                 this.wcfManager = wcfManager;
             }
 
-            protected override Task OnStart(IMessageSession session, CancellationToken cancellationToken)
+            protected override Task OnStart(IMessageSession session, CancellationToken cancellationToken = default)
             {
-                return wcfManager.Startup(session);
+                return wcfManager.Startup(session, cancellationToken);
             }
 
-            protected override Task OnStop(IMessageSession session, CancellationToken cancellationToken)
+            protected override Task OnStop(IMessageSession session, CancellationToken cancellationToken = default)
             {
-                return wcfManager.Shutdown();
+                return wcfManager.Shutdown(cancellationToken);
             }
 
             WcfManager wcfManager;
