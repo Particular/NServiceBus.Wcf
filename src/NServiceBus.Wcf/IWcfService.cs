@@ -1,3 +1,5 @@
+#pragma warning disable PS0018 // A task-returning method should have a CancellationToken parameter unless it has a parameter implementing ICancellableContext
+
 namespace NServiceBus
 {
     using System.ServiceModel;
@@ -18,3 +20,5 @@ namespace NServiceBus
         Task<TResponse> Process(TRequest request);
     }
 }
+
+#pragma warning restore PS0018 // A task-returning method should have a CancellationToken parameter unless it has a parameter implementing ICancellableContext

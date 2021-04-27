@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ServiceModel;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -22,7 +23,7 @@
         ///     Starts a <see cref="ServiceHost" /> for each found service. Defaults to <see cref="BasicHttpBinding" /> if
         ///     no user specified binding is found
         /// </summary>
-        public async Task Startup(IMessageSession session)
+        public async Task Startup(IMessageSession session, CancellationToken cancellationToken = default)
         {
             foreach (var serviceType in serviceTypes)
             {
@@ -41,7 +42,7 @@
         /// <summary>
         ///     Shuts down the service hosts
         /// </summary>
-        public async Task Shutdown()
+        public async Task Shutdown(CancellationToken cancellationToken = default)
         {
             foreach (var host in hosts)
             {
