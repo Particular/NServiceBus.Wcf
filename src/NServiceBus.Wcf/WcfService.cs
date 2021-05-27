@@ -37,7 +37,7 @@ namespace NServiceBus
                 {
                     return await SessionProvider.Session.Request<TResponse>(request, sendOptions, cts.Token).ConfigureAwait(false);
                 }
-                catch (OperationCanceledException)
+                catch (OperationCanceledException) when (cts.Token.IsCancellationRequested)
                 {
                     throw new FaultException($"The request was cancelled after { CancelProvider.CancelAfter } because no response was received.");
                 }
