@@ -33,7 +33,7 @@ public class When_cancelling_request : NServiceBusAcceptanceTest
             .Done(c => c.Exception != null)
             .Run(TimeSpan.FromSeconds(10));
 
-        Assert.That(context.Exception.Message, Does.Contain("The request was cancelled after"));
+        Assert.That(context.Exception.Message, Does.Contain("The request was canceled after"));
         Assert.IsNull(context.Id);
     }
 
