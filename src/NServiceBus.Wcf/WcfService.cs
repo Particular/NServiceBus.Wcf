@@ -39,7 +39,7 @@ namespace NServiceBus
                 }
                 catch (OperationCanceledException) when (cts.Token.IsCancellationRequested)
                 {
-                    throw new FaultException($"The request was cancelled after { CancelProvider.CancelAfter } because no response was received.");
+                    throw new FaultException($"The request was canceled after { CancelProvider.CancelAfter } because no response was received.");
                 }
             }
         }
