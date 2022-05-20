@@ -8,12 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus" Version="[8.0.0-beta.1, 9.0.0)" />
-    <PackageReference Include="NServiceBus.Callbacks" Version="[4.0.0-beta.1, 5.0.0)" />
+    <PackageReference Include="NServiceBus" Version="[8.0.0-beta.2, 9.0.0)" />
+    <PackageReference Include="NServiceBus.Callbacks" Version="[4.0.0-beta.2, 5.0.0)" />
     <PackageReference Include="Particular.Packaging" Version="2.1.0" PrivateAssets="All" />
   </ItemGroup>
 
