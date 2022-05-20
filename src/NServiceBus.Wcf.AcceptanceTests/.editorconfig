@@ -6,3 +6,6 @@ dotnet_diagnostic.PS0018.severity = none
 
 # Justification: Tests don't support cancellation and don't need to forward IMessageHandlerContext.CancellationToken
 dotnet_diagnostic.NSB0002.severity = suggestion
+
+# Tests do not support cancellation
+dotnet_diagnostic.PS0013.severity = suggestion
