@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
   <ItemGroup>
