@@ -1,6 +1,10 @@
 # NServiceBus.Wcf
 
-Enables simple hosting of WCF services which bridge between WCF and the messaging infrastructure.
+NServiceBus.Wcf enables simple hosting of WCF services which bridge between WCF and the messaging infrastructure.
+
+It is part of the [Particular Service Platform](https://particular.net/service-platform), which includes [NServiceBus](https://particular.net/nservicebus) and tools to build, monitor, and debug distributed systems.
+
+See the [Exposing Endpoints via WCF documentation](https://docs.particular.net/nservicebus/wcf/) to learn more.
 
 ## Prerequisites
 
