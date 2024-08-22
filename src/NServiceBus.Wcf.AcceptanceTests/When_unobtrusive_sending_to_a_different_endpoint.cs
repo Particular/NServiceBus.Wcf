@@ -28,7 +28,7 @@ public class When_unobtrusive_sending_to_a_different_endpoint : NServiceBusAccep
             .Done(c => c.HandlerCalled && c.Id.HasValue)
             .Run();
 
-        Assert.IsTrue(context.HandlerCalled);
+        Assert.That(context.HandlerCalled, Is.True);
         Assert.AreEqual(messageId, context.Id);
     }
 
