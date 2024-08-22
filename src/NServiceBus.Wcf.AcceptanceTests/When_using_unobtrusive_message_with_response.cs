@@ -26,8 +26,11 @@ public class When_using_unobtrusive_message_with_response : NServiceBusAcceptanc
             .Done(c => c.HandlerCalled && c.Id.HasValue)
             .Run();
 
-        Assert.That(context.HandlerCalled, Is.True);
-        Assert.That(context.Id, Is.EqualTo(messageId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.HandlerCalled, Is.True);
+            Assert.That(context.Id, Is.EqualTo(messageId));
+        });
     }
 
     class Context : ScenarioContext

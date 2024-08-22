@@ -31,8 +31,11 @@ public class When_using_enum_response : NServiceBusAcceptanceTest
             .Done(c => c.HandlerCalled && c.Response.HasValue)
             .Run();
 
-        Assert.That(context.HandlerCalled, Is.True);
-        Assert.That(context.Response, Is.EqualTo(Response.Ok));
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.HandlerCalled, Is.True);
+            Assert.That(context.Response, Is.EqualTo(Response.Ok));
+        });
     }
 
     class Context : ScenarioContext
