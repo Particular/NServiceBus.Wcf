@@ -32,7 +32,7 @@ public class When_using_enum_response : NServiceBusAcceptanceTest
             .Run();
 
         Assert.That(context.HandlerCalled, Is.True);
-        Assert.AreEqual(Response.Ok, context.Response);
+        Assert.That(context.Response, Is.EqualTo(Response.Ok));
     }
 
     class Context : ScenarioContext

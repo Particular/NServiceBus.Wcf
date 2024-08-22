@@ -28,7 +28,7 @@ public class When_sending_to_a_different_endpoint : NServiceBusAcceptanceTest
             .Run();
 
         Assert.That(context.HandlerCalled, Is.True);
-        Assert.AreEqual(messageId, context.Id);
+        Assert.That(context.Id, Is.EqualTo(messageId));
     }
 
     class Context : ScenarioContext

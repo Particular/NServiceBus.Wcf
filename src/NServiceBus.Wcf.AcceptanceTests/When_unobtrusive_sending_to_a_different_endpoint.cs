@@ -29,7 +29,7 @@ public class When_unobtrusive_sending_to_a_different_endpoint : NServiceBusAccep
             .Run();
 
         Assert.That(context.HandlerCalled, Is.True);
-        Assert.AreEqual(messageId, context.Id);
+        Assert.That(context.Id, Is.EqualTo(messageId));
     }
 
     class Context : ScenarioContext

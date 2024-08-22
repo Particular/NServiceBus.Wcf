@@ -27,7 +27,7 @@ public class When_using_message_response : NServiceBusAcceptanceTest
             .Run();
 
         Assert.That(context.HandlerCalled, Is.True);
-        Assert.AreEqual(messageId, context.Id);
+        Assert.That(context.Id, Is.EqualTo(messageId));
     }
 
     class Context : ScenarioContext
