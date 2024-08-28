@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
+    <!-- Suppress NU1608 warning, newer versions reference NUnit4 but
+    we can't update because the tool doesn't support newer versions of NServiceBus 
+    as this project requires .NET Framework -->
+    <NoWarn>$(NoWarn);NU1608</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="GitHubActionsTestLogger" Version="2.4.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="9.2.2" />
+    <PackageReference Include="NServiceBus.AcceptanceTesting" Version="8.2.3" />
     <PackageReference Include="NUnit" Version="4.2.1" />
     <PackageReference Include="NUnit.Analyzers" Version="4.3.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
